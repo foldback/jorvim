@@ -154,16 +154,17 @@
 " }}}
 " UI & UX {{{
 
-  " Color {
+  " Colors {
     set background=dark
-    " Check if terminal supports bright colors without bolding
-    if &t_Co == 8 && $TERM !~# "^linux\|^Eterm"
-      set t_Co=16  " and enable that if true
-    endif
-  " }
-
-  " UI color {
     colorscheme OceanicNext
+    " 256 colors support
+    if v:version < 800
+      set t_Co=256
+    else
+      if (has("termguicolors"))
+        set termguicolors
+      endif
+    endif
   " }
 
   " Text {
