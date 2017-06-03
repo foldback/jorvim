@@ -34,9 +34,7 @@
 " Plugins {{{
 
   " Keep Vim minimal if wanted
-  " Load VIM_NO_EXTRA env variable in your shell
-  let Vim_no_extra = $VIM_NO_EXTRA
-  if !exists('&Vim_no_extra')
+  if empty($VIM_NO_EXTRA)
 
     " Vim-plug {
       " Initialize
@@ -113,12 +111,11 @@
       " `, u` -> toggle undo tree
       nnoremap <leader>u :UndotreeToggle<CR>
       " {
-
+  
   endif
 
 " }}}
 " Functions {{{
-
 
 " }}}
 " Keybindings {{{
@@ -253,7 +250,7 @@
       set statusline=%<%f\
       " Options
       set statusline+=%w%h%m%r
-      if !empty(glob("$HOME/.vim/plugged/vim-fugitive"))
+      if empty($VIM_NO_EXTRA) && !empty(glob("$HOME/.vim/plugged/vim-fugitive"))
         " Fugitive in statusline
         set statusline+=%{fugitive#statusline()}
       endif
