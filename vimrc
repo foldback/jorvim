@@ -241,7 +241,8 @@
   " }
 
   " Statusline {
-    if has('statusline')
+    " When running Vim with plugins
+    if has('statusline') && empty($VIM_NO_EXTRA)
       " Always display statusline
       set laststatus=2
       " Display current mode
@@ -250,7 +251,7 @@
       set statusline=%<%f\
       " Options
       set statusline+=%w%h%m%r
-      if empty($VIM_NO_EXTRA) && !empty(glob("$HOME/.vim/plugged/vim-fugitive"))
+      if !empty(glob("$HOME/.vim/plugged/vim-fugitive"))
         " Fugitive in statusline
         set statusline+=%{fugitive#statusline()}
       endif
@@ -260,6 +261,44 @@
       set statusline+=\ [%{getcwd()}]
       " Right aligned file nav info
       set statusline+=%=%-14.(%l,%c%V%)\ %p%%
+    " When running Vim minimally
+    else
+      " Create currentmode variable
+      let g:currentmode={
+      \ 'n'  : 'N ',
+      \ 'no' : 'N·Operator Pending ',
+      \ 'v'  : 'V ',
+      \ 'V'  : 'V·Line ',
+      \ '' : 'V·Block ',
+      \ 's'  : 'Select ',
+      \ 'S'  : 'S·Line ',
+      \ '' : 'S·Block ',
+      \ 'i'  : 'I ',
+      \ 'R'  : 'R ',
+      \ 'Rv' : 'V·Replace ',
+      \ 'c'  : 'Command ',
+      \ 'cv' : 'Vim Ex ',
+      \ 'ce' : 'Ex ',
+      \ 'r'  : 'Prompt ',
+      \ 'rm' : 'More ',
+      \ 'r?' : 'Confirm ',
+      \ '!'  : 'Shell ',
+      \ 't'  : 'Terminal '
+      \}
+      " Always display statusline
+      set laststatus=2
+      " Current mode
+      set statusline=[%0*\ %{toupper(g:currentmode[mode()])}]
+      " Current dir
+      set statusline+=[%{getcwd()}]
+      " Filename
+      set statusline+=[%<%f]
+      " Filetype
+      "set statusline+=\ [%{&ff}/%Y]
+      " Options
+      set statusline+=%w%h%m%r
+      " Right aligned file nav info
+      set statusline+=%=%-14.(ln:%l\ clm:%c%V%)\ %p%%
     endif
   " }
 
