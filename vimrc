@@ -290,16 +290,18 @@
       set laststatus=2
       " Current mode
       set statusline=[%0*\ %{toupper(g:currentmode[mode()])}]
-      " Current dir
-      set statusline+=[%{getcwd()}]
-      " Filename
-      set statusline+=[%<%f]
       " Filetype
-      "set statusline+=\ [%{&ff}/%Y]
+      "set statusline+=[%{&ff}/%Y]
       " Options
       set statusline+=%w%h%m%r
+      " Filename
+      set statusline+=[%<%f
+      " Separator
+      set statusline+=\ -\ 
+      " Current dir
+      set statusline+=%{getcwd()}]
       " Right aligned file nav info
-      set statusline+=%=%-14.(ln:%l\ clm:%c%V%)\ %p%%
+      set statusline+=%=%-14.(Ln:%l\ Col:%c%V%)\ %p%%
     endif
   " }
 
